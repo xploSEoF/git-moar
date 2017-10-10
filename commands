@@ -1,0 +1,68 @@
+git aliases
+	Lists out all of the aliases, in alphabetical order, as are in the configs
+
+git cdiff
+	Alias for "git diff --cached"
+
+	Shows the file changes that are cached for check in
+
+git ci
+	Alias for "git commit"
+
+	Shorthand notation for ease
+
+git co
+	Alias for "git checkout"
+
+	Shorthand notation for ease
+
+git cob
+	Alias for "git checkout --no-track -b"
+
+git commands
+	Alias for "less -S /var/git/local/commands"
+
+git ff
+	Alias for "git fastforward"
+
+	Shorthand
+
+git lga
+	Alias for "git log --graph --remotes --tags --decorate --branches --all --pretty=format:'%C(auto)%h%d %s %C(dim normal)(%an)%C(reset)'"
+
+git lgg
+	Alias for "git log --oneline --graph --decorate"
+
+git lg
+	Alias for "git log --graph --decorate --branches --oneline --remotes --tags --all --color"
+
+git paths
+	Alias for "git remote -v"
+
+	Mercurial hangup
+
+git rb
+	Almost an alias for "git rebase -p"
+
+	This retains branch information on all branches involved in the rebase, but can't be used for continueing with the rebase.
+
+git st
+	Alias for "git status"
+
+	Shortcut
+
+git subup
+	Alias for "git submodule update --init --recursive"
+
+git unstage
+	Alias for "git reset HEAD"
+
+	Sensible alternative to git stage
+
+git whatis
+	Alias for "git rev-list --max-count 1"
+
+git yoink
+	Alias for "git cherry-pick"
+
+	Shortcut

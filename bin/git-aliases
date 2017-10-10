@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git config --get-regexp "^alias\\." | sort
+
