@@ -1,0 +1,7 @@
+#!/bin/bash
+
+git co -q $(git rev-parse HEAD)
+
+echo "You are now in 'detached HEAD' state. You were detatched from..."
+
+git --no-pager log --oneline --decorate -1
