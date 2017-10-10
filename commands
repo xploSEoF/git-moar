@@ -1,6 +1,9 @@
 git aliases
 	Lists out all of the aliases, in alphabetical order, as are in the configs
 
+git detach
+	Detaches the HEAD from any ref, pointing it directly at the commit instead
+
 git cdiff
 	Alias for "git diff --cached"
 
@@ -26,6 +29,9 @@ git ff
 	Alias for "git fastforward"
 
 	Shorthand
+
+git fastforward
+	Updates your current branch to target, or the default tracking branch
 
 git lga
 	Alias for "git log --graph --remotes --tags --decorate --branches --all --pretty=format:'%C(auto)%h%d %s %C(dim normal)(%an)%C(reset)'"
