@@ -1,0 +1,10 @@
+#!/bin/bash
+
+branch=$(git branch | grep '^\*' | cut -d' ' -f2);
+
+if [ "$branch" == "(HEAD" ];then
+	exit 1 
+else
+	echo "$branch"
+fi
+

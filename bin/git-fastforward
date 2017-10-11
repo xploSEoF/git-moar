@@ -3,17 +3,17 @@
 target=$1
 
 if [ "$target" = "" ]; then
-	branch=$(git name-rev --name-only HEAD)
+	branch=$(git current-branch)
 
-	if [ "$branch" = "" ]; then
+	if [ "$?" -ne "0" ]; then
 		echo "Cannot determine branch" >&2
 		exit 1
 	fi
 
-	origin=`git config branch.$branch.remote` 
+	remote=$(git branch remote "$branch")
 
-	if [ "$?" -ne 0 ]; then
-		echo "Didn't find sensible default" >&2
+	if [ "$?" -ne "0" ]; then
+		echo "Cannot determine sensible default remote" >&2
 		exit 1
 	fi
 

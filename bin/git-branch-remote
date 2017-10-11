@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ "$1" == "" ];then
+	branch=$(git current-branch)
+
+	if [ "$?" -ne "0" ];then
+		echo "Cannot determine current branch" >&2
+		exit 1
+	fi
+else
+	branch=$1
+fi
+
+remote=$(git config branch.$branch.remote)
+
+if [ "$remote" == "" ];then
+	exit 1
+else
+	echo "$remote"
+fi

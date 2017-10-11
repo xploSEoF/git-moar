@@ -1,6 +1,9 @@
 git aliases
 	Lists out all of the aliases, in alphabetical order, as are in the configs
 
+git branch-remote [BRANCH_NAME]
+	Tells you the tracking remote for the specified branch
+
 git detach
 	Detaches the HEAD from any ref, pointing it directly at the commit instead
 
@@ -12,35 +15,40 @@ git cdiff
 git ci
 	Alias for "git commit"
 
-	Shorthand notation for ease
+	Shorthand
 
 git co
 	Alias for "git checkout"
 
-	Shorthand notation for ease
+	Shorthand
 
 git cob
 	Alias for "git checkout --no-track -b"
 
+	Shorthand with parameters
+
 git commands
-	Alias for "less -S /var/git/local/commands"
+	Tells you all about the custom git commands
+
+git current-branch
+	Tells you the current branch name
+
+git fastforward [TARGET]
+	Updates your current branch to target, or the default tracking branch
 
 git ff
 	Alias for "git fastforward"
 
 	Shorthand
 
-git fastforward
-	Updates your current branch to target, or the default tracking branch
+git lg
+	Alias for "git log --graph --decorate --branches --oneline --remotes --tags --all --color"
 
 git lga
 	Alias for "git log --graph --remotes --tags --decorate --branches --all --pretty=format:'%C(auto)%h%d %s %C(dim normal)(%an)%C(reset)'"
 
 git lgg
 	Alias for "git log --oneline --graph --decorate"
-
-git lg
-	Alias for "git log --graph --decorate --branches --oneline --remotes --tags --all --color"
 
 git paths
 	Alias for "git remote -v"
@@ -55,7 +63,7 @@ git rb
 git st
 	Alias for "git status"
 
-	Shortcut
+	Shorthand
 
 git subup
 	Alias for "git submodule update --init --recursive"
@@ -71,4 +79,4 @@ git whatis
 git yoink
 	Alias for "git cherry-pick"
 
-	Shortcut
+	Shorthand
