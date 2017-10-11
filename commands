@@ -44,6 +44,9 @@ git ff
 git hoist [BRANCH] [TARGET]
 	Move a branch to a specific target, providing the target is further up the same branch
 
+git list-branches
+	Lists the branches, without prefixing or colours
+
 git lg
 	Alias for "git log --graph --decorate --branches --oneline --remotes --tags --all --color"
 

@@ -60,6 +60,10 @@ _git_lgg() {
 	_git_log
 }
 
+_git_list_branches() {
+	exit
+}
+
 _git_paths() {
 	_git_remote
 }
