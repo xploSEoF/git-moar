@@ -6,14 +6,12 @@ if [ "$target" = "" ]; then
 	branch=$(git current-branch)
 
 	if [ "$?" -ne "0" ]; then
-		echo "Cannot determine branch" >&2
 		exit 1
 	fi
 
 	remote=$(git branch remote "$branch")
 
 	if [ "$?" -ne "0" ]; then
-		echo "Cannot determine sensible default remote" >&2
 		exit 1
 	fi
 
