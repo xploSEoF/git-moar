@@ -1,10 +1,10 @@
 #!/bin/bash
 
-target=$1;
-origin='';
-branch=$(git branch | grep '^\*' | cut -d' ' -f2)
+target=$1
 
 if [ "$target" = "" ]; then
+	branch=$(git name-rev --name-only HEAD)
+
 	if [ "$branch" = "" ]; then
 		echo "Cannot determine branch" >&2
 		exit 1
