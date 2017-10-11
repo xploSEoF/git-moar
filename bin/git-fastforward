@@ -3,16 +3,16 @@
 target=$1
 
 if [[ "$target" = "" ]]; then
-	branch=$(git current-branch)
+	branch=$(git _determine-branch)
 
 	if [[ "$?" -ne "0" ]]; then
-		exit 1
+		exit $?
 	fi
 
-	remote=$(git branch-remote "$branch")
+	remote=$(git _determine-remote "" "$branch")
 
 	if [[ "$?" -ne "0" ]]; then
-		exit 1
+		exit $?
 	fi
 
 	target="$origin/$branch"
