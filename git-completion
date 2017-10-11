@@ -1,0 +1,86 @@
+#!/bin/bash
+
+_git_a() {
+	_git_add
+}
+
+_git_branch_remote() {
+	exit
+}
+
+_git_cdiff() {
+	_git_diff
+}
+
+_git_ci() {
+	_git_commit
+}
+
+_git_co() {
+	_git_checkout
+}
+
+_git_cob() {
+	_git_checkout
+}
+
+_git_commands() {
+	exit
+}
+
+_git_current_branch() {
+	exit
+}
+
+_git_detach() {
+	exit
+}
+
+_git_fastforward() {
+	exit
+}
+
+_git_ff() {
+	_git_fastforward
+}
+
+_git_lg() {
+	_git_log
+}
+
+_git_lga() {
+	_git_log
+}
+
+_git_lgg() {
+	_git_log
+}
+
+_git_paths() {
+	_git_remote
+}
+
+_git_rb() {
+	_git_rebase
+}
+
+_git_st() {
+	_git_status
+}
+
+_git_subup() {
+	__gitcomp "
+		--remote --no-fetch
+		--recommend-shallow --no-recommend-shallow
+		--force --rebase --merge --reference --depth --jobs
+	"	
+}
+
+_git_unstage() {
+	_git_reset
+}
+
+_git_yoink() {
+	_git_cherry_pick
+}
+
