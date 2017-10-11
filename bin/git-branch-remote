@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ "$1" == "" ];then
+if [[ "$1" == "" ]];then
 	branch=$(git current-branch)
 
-	if [ "$?" -ne "0" ];then
+	if [[ "$?" -ne "0" ]];then
 		exit 1
 	fi
 else
@@ -12,7 +12,7 @@ fi
 
 remote=$(git config branch.$branch.remote)
 
-if [ "$remote" == "" ];then
+if [[ "$remote" == "" ]];then
 	echo "Tracking remote could not be determined for $branch" >&2
 	exit 1
 fi

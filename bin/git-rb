@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -d ".git/rebase-merge" ] || [ -d ".git/rebase-apply" ]; then
+if [[ -d ".git/rebase-merge" ]] || [[ -d ".git/rebase-apply" ]]; then
 	git rebase "$@"
 else
 	git rebase -p "$@"

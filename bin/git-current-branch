@@ -2,7 +2,7 @@
 
 branch=$(git branch | grep '^\*' | cut -d' ' -f2);
 
-if [ "$branch" == "(HEAD" ];then
+if [[ "$branch" == "(HEAD" ]];then
 	echo "Cannot determine current branch" >&2
 	exit 1 
 else

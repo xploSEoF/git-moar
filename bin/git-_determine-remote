@@ -3,10 +3,17 @@
 remote=$1
 branch=$2
 
+git _validate-remote $remote >/dev/null 2>&1
+
+if [[ -n $remote ]] && [[ "$?" -ne "0" ]];then
+        echo "Invalid remote" >&2
+        remote=""
+fi
+
 if [[ -z $remote ]];then
 	remote=$(git branch-remote "$branch" 2>/dev/null)
 
-	if [ "$?" -ne "0" ];then
+	if [[ "$?" -ne "0" ]];then
                 remotes=$(git remote)
 
 		if [[ $(echo "$remotes" | wc -l) == 1 ]];then
