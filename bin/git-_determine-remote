@@ -1,0 +1,25 @@
+#!/bin/bash
+
+remote=$1
+branch=$2
+
+if [[ -z $remote ]];then
+	remote=$(git branch-remote "$branch" 2>/dev/null)
+
+	if [ "$?" -ne "0" ];then
+                remotes=$(git remote)
+
+		if [[ $(echo "$remotes" | wc -l) == 1 ]];then
+			remote=$remotes
+		else
+			remote=$(_select-option "Select the remote" $remotes)
+		fi
+        fi
+
+        if [[ -z $remote ]];then
+                echo 'Could not determine remote' >&2
+                exit 1
+        fi
+fi
+
+echo "$remote"

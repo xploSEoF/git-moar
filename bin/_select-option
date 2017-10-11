@@ -1,0 +1,21 @@
+#!/bin/bash
+
+message=${1:-Please choose one of the above options}
+old_PS3=PS3
+PS3="$message (type q to quit) "
+
+shift
+
+select selected in "${@}"; do
+	if [[ ! -z $selected ]]; then
+		echo $selected
+		break
+	elif [[ "$REPLY" == q* ]]; then
+		REPLY=255
+		break
+	fi
+done
+
+PS3=$old_PS3
+
+exit $REPLY

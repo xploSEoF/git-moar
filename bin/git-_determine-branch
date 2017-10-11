@@ -1,0 +1,24 @@
+#!/bin/bash
+
+branch=$1
+
+if [[ -z $branch ]];then
+	branch=$(git current-branch 2>/dev/null)
+
+	if [ "$?" -ne "0" ];then
+                branches=$(git list-branches)
+
+		if [[ $(echo "$branches" | wc -l) == 1 ]];then
+                        branch=$branches
+                else
+	                branch=$(_select-option "Select the branch" $branches)
+		fi
+        fi
+
+        if [[ -z $branch ]];then
+                echo 'Could not determine branch' >&2
+                exit 1
+        fi
+fi
+
+echo "$branch"
