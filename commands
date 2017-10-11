@@ -41,6 +41,9 @@ git ff
 
 	Shorthand
 
+git hoist [BRANCH] [TARGET]
+	Move a branch to a specific target, providing the target is further up the same branch
+
 git lg
 	Alias for "git log --graph --decorate --branches --oneline --remotes --tags --all --color"
 
@@ -56,7 +59,7 @@ git paths
 	Mercurial hangup
 
 git rb
-	Almost an alias for "git rebase -p"
+	Almost an alias for "git rebase -p", but not adding the flag when part-way through a rebase
 
 	This retains branch information on all branches involved in the rebase, but can't be used for continueing with the rebase.
 
