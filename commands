@@ -86,6 +86,9 @@ git st
 git subup
 	Alias for "git submodule update --init --recursive"
 
+git tidy-branches [BRANCHES]
+	Remove all unused branches except for the ones specified
+
 git update
 	Updates the current branch from its tracking remote
 

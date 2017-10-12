@@ -96,6 +96,10 @@ _git_subup() {
 	"	
 }
 
+_git_tidy_branches() {
+	return
+}
+
 _git_update() {
 	return
 }
