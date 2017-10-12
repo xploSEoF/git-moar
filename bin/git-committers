@@ -1,0 +1,15 @@
+#!/bin/bash
+
+git_log_command="git log --format='%cN"
+
+if [[ "$*" =~ -v ]];then
+	git_log_command="${git_log_command} <%cE>"
+fi
+
+git_log_command="${git_log_command}' --all"
+
+if [[ "$*" =~ -l ]];then
+	git_log_command="${git_log_command} --since='1 year ago'"
+fi
+
+eval "$git_log_command" | sort | uniq -c | sort -nr

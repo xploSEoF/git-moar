@@ -4,6 +4,10 @@ _git_a() {
 	_git_add
 }
 
+_git_authors() {
+	__gitcomp "-l -v"
+}
+
 _git_branch_remote() {
 	return
 }
@@ -27,6 +31,10 @@ _git_cob() {
 _git_commands() {
 	#TODO
 	return
+}
+
+_git_committers() {
+	__gitcomp "-l -v"
 }
 
 _git_current_branch() {

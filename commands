@@ -1,6 +1,12 @@
 git aliases
 	Lists out all of the aliases, in alphabetical order, as are in the configs
 
+git authors [-l] [-v]
+	Who has been authoring content in the repository
+
+	-l	The last year only
+	-v	Include email address
+
 git branch-remote [BRANCH_NAME]
 	Tells you the tracking remote for the specified branch
 
@@ -29,6 +35,12 @@ git cob
 
 git commands
 	Tells you all about the custom git commands
+
+git committers [-l] [-v]
+	Who has been committing to the repository
+
+	-l	The last year only
+	-v	Include email address
 
 git current-branch
 	Tells you the current branch name
