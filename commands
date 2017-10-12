@@ -74,6 +74,9 @@ git st
 git subup
 	Alias for "git submodule update --init --recursive"
 
+git update
+	Updates the current branch from its tracking remote
+
 git unstage
 	Alias for "git reset HEAD"
 
