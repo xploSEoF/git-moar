@@ -4,12 +4,16 @@ _git_a() {
 	_git_add
 }
 
+_git_aliases() {
+	return
+}
+
 _git_authors() {
 	__gitcomp "-l -v"
 }
 
 _git_branch_remote() {
-	return
+	__gitcomp "$(git list-branches)"
 }
 
 _git_cdiff() {
@@ -38,17 +42,15 @@ _git_committers() {
 }
 
 _git_current_branch() {
-	#TODO
 	return
 }
 
 _git_detach() {
-	#TODO
 	return
 }
 
 _git_fastforward() {
-	return
+	_git_branch_remote
 }
 
 _git_ff() {
@@ -56,7 +58,11 @@ _git_ff() {
 }
 
 _git_hoist() {
-	return
+	if [[ "$cword" < "3" ]];then
+		_git_branch_remote
+	else
+		__gitcomp "$( __git_refs)"
+	fi
 }
 
 _git_lg() {

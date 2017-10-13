@@ -6,11 +6,11 @@ PS3="$message (type q to quit) "
 
 shift
 
-select selected in "${@}"; do
-	if [[ ! -z $selected ]]; then
+select selected in "${@}";do
+	if [[ ! -z $selected ]];then
 		echo $selected
 		break
-	elif [[ "$REPLY" == q* ]]; then
+	elif [[ "$REPLY" == q* ]];then
 		REPLY=255
 		break
 	fi

@@ -2,16 +2,16 @@
 
 target=$1
 
-if [[ "$target" = "" ]]; then
+if [[ "$target" = "" ]];then
 	branch=$(git _determine-branch)
 
-	if [[ "$?" -ne "0" ]]; then
+	if [[ "$?" -ne "0" ]];then
 		exit $?
 	fi
 
 	remote=$(git _determine-remote "" "$branch")
 
-	if [[ "$?" -ne "0" ]]; then
+	if [[ "$?" -ne "0" ]];then
 		exit $?
 	fi
 
