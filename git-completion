@@ -33,8 +33,7 @@ _git_cob() {
 }
 
 _git_commands() {
-	#TODO
-	return
+	__gitcomp "$(grep -iE --colour=never '^git' /var/git/local/commands|cut -d' ' -f2)"
 }
 
 _git_committers() {
