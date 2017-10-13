@@ -7,8 +7,11 @@ git authors [-l] [-v]
 	-l	The last year only
 	-v	Include email address
 
-git branch-remote [BRANCH_NAME]
+git branch-remote [<BRANCH_NAME>]
 	Tells you the tracking remote for the specified branch
+
+	<BRANCH_NAME>	is the name of the branch you want to find the remote for.
+			Defaults to the current working branch.
 
 git detach
 	Detaches the HEAD from any ref, pointing it directly at the commit instead
@@ -45,16 +48,25 @@ git committers [-l] [-v]
 git current-branch
 	Tells you the current branch name
 
-git fastforward [TARGET]
+git fastforward [<TARGET>]
 	Updates your current branch to target, or the default tracking branch
+
+	<TARGET>	The point further up the same branch to fastforward to.
+			Can be a reference or a commit hash.
 
 git ff
 	Alias for "git fastforward"
 
 	Shorthand
 
-git hoist [BRANCH] [TARGET]
+git hoist [<BRANCH>] [<TARGET>]
 	Move a branch to a specific target, providing the target is further up the same branch
+
+	<BRANCH>	The branch you wish to move.
+			Defaults to the current working branch.
+
+	<TARGET>	The point further up the same branch to hoist the branch to.
+			Can be a reference or a commit hash.
 
 git list-branches
 	Lists the branches, without prefixing or colours
@@ -86,8 +98,10 @@ git st
 git subup
 	Alias for "git submodule update --init --recursive"
 
-git tidy-branches [BRANCHES]
+git tidy-branches [<BRANCH ...>]
 	Remove all unused branches except for the ones specified
+
+	<BRANCH>	The name of a branch to keep
 
 git update
 	Updates the current branch from its tracking remote
