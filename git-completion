@@ -40,6 +40,14 @@ _git_committers() {
 	__gitcomp "-l -v"
 }
 
+_git_cpush() {
+	if [[ "$cword" < "3" ]];then
+		__gitcomp "$(git remote)"
+	else
+		_git_branch_remote
+	fi
+}
+
 _git_current_branch() {
 	return
 }
@@ -54,6 +62,10 @@ _git_fastforward() {
 
 _git_ff() {
 	_git_fastforward
+}
+
+_git_fpush() {
+	_git_cpush
 }
 
 _git_hoist() {

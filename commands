@@ -45,6 +45,15 @@ git committers [-l] [-v]
 	-l	The last year only
 	-v	Include email address
 
+git cpush [<REMOTE>] [<BRANCH>]
+	Push to the remote the branch
+
+	<REMOTE>	The remote to push to.
+			Defaults to the tracking remote for the branch selected
+
+	<BRANCH>	The branch to push.
+			Defaults to the current working branch
+
 git current-branch
 	Tells you the current branch name
 
@@ -58,6 +67,15 @@ git ff
 	Alias for "git fastforward"
 
 	Shorthand
+
+git fpush [<REMOTE>] [<BRANCH>]
+	Force push the branch to the remote, providing we're not running on stale information
+
+	<REMOTE>	The remote to push to.
+			Defaults to the tracking remote for the branch selected
+
+	<BRANCH>	The branch to push.
+			Defaults to the current working branch
 
 git hoist [<BRANCH>] [<TARGET>]
 	Move a branch to a specific target, providing the target is further up the same branch
