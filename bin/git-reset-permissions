@@ -1,0 +1,9 @@
+#!/bin/bash
+
+perm_diff=$(git diff "$@" | grep -A1 -B1 -E '^(old mode)')
+
+if [[ "$perm_diff" == "" ]];then
+	echo "No changed permissions"
+else
+	echo "$perm_diff" | git apply -R
+fi

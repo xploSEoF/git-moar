@@ -108,6 +108,9 @@ git rb
 
 	This retains branch information on all branches involved in the rebase, but can't be used for continueing with the rebase.
 
+git reset-permissions [<FILE ...>]
+	Reset only the permissions
+
 git st
 	Alias for "git status"
 

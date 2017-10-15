@@ -101,6 +101,10 @@ _git_rb() {
 	_git_rebase
 }
 
+_git_reset_permissions() {
+	return
+}
+
 _git_st() {
 	_git_status
 }
