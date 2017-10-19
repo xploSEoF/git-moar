@@ -26,6 +26,12 @@ git ci
 
 	Shorthand
 
+git changelog <REF1> <REF2>
+	Shows all the PR closures between two commits, making it easier to create a changelog
+
+	<REF1>		A git commit reference, or pointer to one
+	<REF2>		A git commit reference, or pointer to one
+
 git co
 	Alias for "git checkout"
 
@@ -97,6 +103,15 @@ git lga
 
 git lgg
 	Alias for "git log --oneline --graph --decorate"
+
+git lgnot
+	Log without specified branch matches
+
+git lgo
+	One screens worth of git history
+
+git lgs
+	Half a screens worth of git history
 
 git paths
 	Alias for "git remote -v"

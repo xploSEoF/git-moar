@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Disable line wrapping
+echo -en "\\033[?7l"
+
+# Use head as the pager to limit lines - minus the typical PS1 line length
+GIT_PAGER="head -n $(expr $(tput lines) - 3)" git lga --color "$@"
+
+# Re-enable line wrapping
+echo -en "\\033[?7h"

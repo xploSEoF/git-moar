@@ -1,0 +1,15 @@
+#!/bin/bash
+
+branches="$(git show-ref|cut -d' ' -f2|sed -E 's/^refs\/(head|remote)s\///')"
+
+if [[ $# -gt 0 ]];then
+	for notthis; do
+		branches=$(echo "$branches" | grep -vE "^$notthis\$")
+	done
+else
+	branches="$(echo "$branches" | grep -E "(/|^)(master|major|minor|bugs)\$")"
+fi
+
+branches="$(echo $branches|tr '\n' ' ')"
+
+git lgg $branches --

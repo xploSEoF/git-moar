@@ -20,6 +20,10 @@ _git_cdiff() {
 	_git_diff
 }
 
+_git_changelog() {
+	return
+}
+
 _git_ci() {
 	_git_commit
 }
@@ -86,6 +90,18 @@ _git_lga() {
 
 _git_lgg() {
 	_git_log
+}
+
+_git_lgnot() {
+	__gitcomp "$(git show-ref|cut -d' ' -f2|sed -E 's/^refs\/(head|remote)s\///'|tr '\n' ' ')"
+}
+
+_git_lgo() {
+	return
+}
+
+_git_lgs() {
+	return
 }
 
 _git_list_branches() {
