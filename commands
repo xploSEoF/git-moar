@@ -92,6 +92,9 @@ git hoist [<BRANCH>] [<TARGET>]
 	<TARGET>	The point further up the same branch to hoist the branch to.
 			Can be a reference or a commit hash.
 
+git ignored
+	Lists all the files that are ignored
+
 git list-branches
 	Lists the branches, without prefixing or colours
 
