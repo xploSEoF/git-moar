@@ -1,0 +1,17 @@
+.\" Manpage for git current-branch
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CURRENT\-BRANCH" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-current-branch \- Tells you the current branch name
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit current-branch\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command tells you the current branch name\&.
+.SH "OPTIONS"
+.sp
+This command has no options

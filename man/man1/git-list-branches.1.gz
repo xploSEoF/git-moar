@@ -1,0 +1,17 @@
+.\" Manpage for git list-branches
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-LIST\-BRANCHES" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-list-branches \- Lists the branches, without prefixing or colours
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit list-branches\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command lists the branches, without prefixing or colours\&.
+.SH "OPTIONS"
+.sp
+This command has no options

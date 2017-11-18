@@ -1,0 +1,17 @@
+.\" Manpage for git update
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-UPDATE" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-update \- Updates the current branch from its tracking remote
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit update\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command updates the current branch from its tracking remote\&.
+.SH "OPTIONS"
+.sp
+This command has no options

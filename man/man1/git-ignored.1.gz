@@ -1,0 +1,17 @@
+.\" Manpage for git ignored
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-IGNORED" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-ignored \- Lists all the files that are ignored
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit ignored\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command lists all the files that are ignored\&.
+.SH "OPTIONS"
+.sp
+This command has no options

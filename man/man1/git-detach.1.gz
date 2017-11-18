@@ -1,0 +1,17 @@
+.\" Manpage for git detach
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-DETACH" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-detach \- Detaches the HEAD from any ref, pointing it directly at the commit instead
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit detach\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command detaches the HEAD from any ref, pointing it directly at the commit instead\&.
+.SH "OPTIONS"
+.sp
+This command has no options

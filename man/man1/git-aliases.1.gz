@@ -1,0 +1,17 @@
+.\" Manpage for git aliases
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-ALIASES" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-aliases \- Lists out all of the aliases, in alphabetical order, as are in the configs
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit aliases\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command lists out all of the aliases, in alphabetical order, as are in the configs\&.
+.SH "OPTIONS"
+.sp
+This command has no options
