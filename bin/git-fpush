@@ -4,20 +4,20 @@ remote=$1
 branch=$2
 
 # If $branch is not set, and $remote is not a valid remote but is a valid branch, then swap it over
-if [[ $# = 1 && $(GIT_VALID_REMOTE $1) = 1 && $(GIT_VALID_BRANCH $1) = 0 ]]; then
+if [[ $# = 1 && $(git _validate-remote "$1") = 1 && $(git _validate-branch "$1") = 0 ]];then
 	branch=$remote
 	remote=''
 fi
 
 branch=$(git _determine-branch "$branch")
 
-if [[ "$?" -ne "0" ]]; then
+if [[ "$?" -ne "0" ]];then
 	exit "$?"
 fi
 
 remote=$(git _determine-remote "$remote" "$branch")
 
-if [[ "$?" -ne "0" ]]; then
+if [[ "$?" -ne "0" ]];then
 	exit "$?"
 fi
 
