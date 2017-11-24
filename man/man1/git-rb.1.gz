@@ -1,0 +1,17 @@
+.\" Manpage for git rb
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-RB" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-rb \- Preserves branch merges when rebasing
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit rb\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Preserves branch merges when rebasing by aliasing to "git rebase -b" without getting hung up with continueing/aborting a rebase\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-rebase\fR(1)

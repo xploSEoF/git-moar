@@ -1,0 +1,30 @@
+.\" Manpage for git cob
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-COB" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-cob \- Shorthand for checking out onto a new branch
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit cob\fR <branchname> [<refspec>]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for "git checkout --no-track -b"\&.
+.sp
+Creates a new branch by the name of <new-branch> at the present location (or at <refspec>)\&.
+.SH "OPTIONS"
+.EE
+<branchname>
+.RS 4
+The name of the new branch\&.
+.RE
+.EE
+<refspec>
+.RS 4
+The refspec where you want the new branch to be\&. Defaults to HEAD\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-checkout\fR(1)

@@ -1,0 +1,25 @@
+.\" Manpage for git committers
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-COMMITTERS" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-committers \- Show who has been committing to the repository, and how much each of them has been working on it
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit committers\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shows who has been committing to the repository, and how much each of them has been working on it\&.
+.SH "OPTIONS"
+.PP
+-l
+.RS 4
+For the last year only\&.
+.RE
+.PP
+-v
+.RS 4
+Verbose - include their email address too\&. This is useful for highlighting incorrect email address configurations\&.
+.RE

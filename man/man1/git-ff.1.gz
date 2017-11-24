@@ -1,0 +1,17 @@
+.\" Manpage for git ff
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-FF" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-ff \- Shorthand for fastforwarding
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit ff\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for "git fastforward"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-fastforward\fR(1)

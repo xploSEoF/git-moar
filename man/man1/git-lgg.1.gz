@@ -1,0 +1,17 @@
+.\" Manpage for git lgg
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-LGG" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-lgg \- Shorthand for outputting the log in a readable format, with minimal information
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit lgg\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for outputting the log in a readable format, with minimal information, specfically for "git log --oneline --graph --decorate"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-log\fR(1)

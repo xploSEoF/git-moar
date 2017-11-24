@@ -1,0 +1,21 @@
+.\" Manpage for git branch-remote
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-BRANCH\-REMOTE" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-branch-remote \- Tells you the tracking remote
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit branch-remote\fR [<branchname>]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Tells you the tracking remote\&.
+.SH "OPTIONS"
+.PP
+<branchname>
+.RS 4
+The name of the branch you'd like to know the tracking remote for\&. Defaults to the current branch\&.
+.RE
+

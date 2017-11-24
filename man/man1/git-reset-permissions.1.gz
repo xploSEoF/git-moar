@@ -1,0 +1,21 @@
+.\" Manpage for git reset-permissions
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-RESET\-PERMISSIONS" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-reset-permissions \- Reset only the permissions
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit reset-permissions\fR [<pathspec>\&...]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Reset only the permissions\&.
+.SH "OPTIONS"
+.EE
+<pathspec>
+.RS 4
+Paths to the files to reset the permissions on\&.
+.RE
+

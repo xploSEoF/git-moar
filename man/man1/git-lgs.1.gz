@@ -1,0 +1,17 @@
+.\" Manpage for git lgs
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-LGS" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-lgs \- Fills half the terminal with log
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit lgs\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Fills half the terminal with log one-liners using "git lga"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-lga\fR(1), \fBgit-log\fR(1)

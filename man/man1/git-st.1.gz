@@ -1,0 +1,17 @@
+.\" Manpage for git st
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-ST" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-st \- Shorthand for showing the current status of git
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit st\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for showing the current status of git, specifically for "git status"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-status\fR(1)

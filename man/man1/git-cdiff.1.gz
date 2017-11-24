@@ -1,0 +1,18 @@
+.\" Manpage for git cdiff
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CDIFF" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-cdiff \- Shows the file changes that are staged
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit cdiff\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shows the file changes that are cached for check in, otherwise known as staged\&.
+.sp
+This is effectively a shortcut for "git diff --cached"\&.
+.SH "SEE ALSO"
+\fBgit-diff\fR(1)

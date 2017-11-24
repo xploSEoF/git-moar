@@ -1,0 +1,17 @@
+.\" Manpage for git yoink
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-YOINK" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-yoink \- Shorthand for grabbing other commits, in order
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit yoink\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for grabbing other commits, in order, specifically for "git cherry-pick"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-cherry-pick\fR(1)

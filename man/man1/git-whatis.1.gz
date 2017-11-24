@@ -1,0 +1,17 @@
+.\" Manpage for git whatis
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-WHATIS" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-whatis \- Shorthand for showing the complete fingerprint of a git commit
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit whatis\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for showing the complete fingerprint of a git commit, specifically for "git rev-list --max-count 1"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-rev-list\fR(1)

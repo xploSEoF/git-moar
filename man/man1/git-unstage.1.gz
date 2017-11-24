@@ -1,0 +1,23 @@
+.\" Manpage for git unstage
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-UNSTAGE" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-unstage \- Remove files from the staging
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit unstage\fR [<pathspec>\&...]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Remove files that are cached for checkin, otherwise known as staging\&. A shortcut for "git reset HEAD"\&.
+.SH "OPTIONS"
+.EE
+<pathspec>
+.RS 4
+Paths to the files to reset the permissions on\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-reset\fR(1)

@@ -1,0 +1,17 @@
+.\" Manpage for git subup
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-SUBUP" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-subup \- Shorthand for updating git submodules
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit subup\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for updating git submodules, specifically for "git submodule update --init --recursive"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-submodule\fR(1)

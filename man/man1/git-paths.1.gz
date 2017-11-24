@@ -1,0 +1,17 @@
+.\" Manpage for git paths
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-PATHS" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-paths \- Shorthand to see all the remotes and their paths
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit paths\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand to see all the remotes and their paths, specifically for "git remote -v"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-remote\fR(1)

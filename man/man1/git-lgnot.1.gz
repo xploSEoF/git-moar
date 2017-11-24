@@ -1,0 +1,23 @@
+.\" Manpage for git lgnot
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-LGNOT" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-lgnot \- Log without specific branches
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit lgnot\fR <branchname-partial>\&...
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Log without specified branch matches\&.
+.SH "OPTIONS"
+.EE
+<branchname-partial>
+.RS 4
+Branchnames to ignore\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-lga\fR(1), \fBgit-log\fR(1)

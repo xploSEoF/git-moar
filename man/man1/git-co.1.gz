@@ -1,0 +1,17 @@
+.\" Manpage for git co
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CO" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-co \- Shorthand for checking out
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit co\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for "git checkout"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-checkout\fR(1)

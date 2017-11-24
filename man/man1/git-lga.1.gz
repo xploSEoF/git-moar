@@ -1,0 +1,17 @@
+.\" Manpage for git lga
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-LGA" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-lga \- Shorthand for outputting the log in a readable format, complete with name and date
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit lga\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for outputting the log in a readable format, complete with name and date, specfically for "git log --graph --remotes --tags --decorate --branches --all --pretty=format:'%C(auto)%h%d %s %C(dim normal)(%an)%C(reset)'"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-log\fR(1)

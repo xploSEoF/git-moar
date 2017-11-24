@@ -1,0 +1,20 @@
+.\" Manpage for git changelog
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CHANGELOG" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-changelog \- Shows all the PR closures between two commits
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit changelog\fR <refspec> <refspec>
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shows all the PR closures between two commits, making it easier to create a changelog\&.
+.SH "OPTIONS"
+.PP
+<refspec>
+.RS 4
+A git commit reference, or pointer to one\&.
+.RE

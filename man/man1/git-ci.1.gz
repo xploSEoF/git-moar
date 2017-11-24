@@ -1,0 +1,17 @@
+.\" Manpage for git ci
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CI" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-ci \- Shorthand for committing
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit ci\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Shorthand for "git commit"\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-commit\fR(1)
