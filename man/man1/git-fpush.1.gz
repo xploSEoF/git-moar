@@ -1,0 +1,28 @@
+.\" Manpage for git fpush
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-FPUSH" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-fpush \- An easy way to handle force pushing the current branch
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit fpush\fR [<repository>] [<branchname>]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+An easy way to handle force pushing the current branch (or a specified branch) to the tracking remote (or a specified remote), providing we're not running on stale information\&.
+.SH "OPTIONS"
+.PP
+<repository>
+.RS 4
+The repository to push to, defaulting to the tracking remote\&.
+.RE
+.PP
+<branchname>
+.RS 4
+The branch to push, defaulting to teh current branch\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-push\fR(1)

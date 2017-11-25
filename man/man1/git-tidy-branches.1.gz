@@ -1,0 +1,23 @@
+.\" Manpage for git tidy-branches
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-TIDY\-BRANCHES" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-tidy-branches \- Remove all unused branches
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit tidy-branches\fR [<branchname>\&...]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Remove all unused branches\&.
+.SH "OPTIONS"
+.PP
+<branchname>
+.RS 4
+A branch to keep\&.
+.RE
+.SH "OPTIONS"
+.sp
+

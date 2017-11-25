@@ -1,0 +1,28 @@
+.\" Manpage for git cpush
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CPUSH" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-cpush \- An easy way to handle pushing the current branch
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit cpush\fR [<repository>] [<branchname>]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+An easy way to handle pushing the current branch (or a specified branch) to the tracking remote (or a specified remote)\&.
+.SH "OPTIONS"
+.PP
+<repository>
+.RS 4
+The repository to push to, defaulting to the tracking remote\&.
+.RE
+.PP
+<branchname>
+.RS 4
+The branch to push, defaulting to the current branch\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-push\fR(1)

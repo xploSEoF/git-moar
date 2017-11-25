@@ -1,0 +1,23 @@
+.\" Manpage for git fastforward
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-FASTFORWARD" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-fastforward \- Moves your current branch further along a branch
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit fastforward\fR [<refspec>]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Moves your current branch further along a branch\&.
+.SH "OPTIONS"
+.PP
+<refspec>
+.RS 4
+The point further up the same branch to fastforward to\&. The default is the same branch on the tracking remote\&.
+.RE
+.SH "SEE ALSO"
+\fBgit-update\fR(1)
+
