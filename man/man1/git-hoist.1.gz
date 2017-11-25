@@ -1,0 +1,28 @@
+.\" Manpage for git hoist
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-HOIST" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-hoist \- Move a branch to a specific target, providing the target is further up the same branch
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit hoist\fR [<branchname> [<refspec>]]
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Move a branch to a specific target, providing the target is further up the same branch\&.
+.SH "OPTIONS"
+.PP
+<branchname>
+.RS 4
+Name of the branch to hoist, defaulting to the current branch\&.
+.RE
+.PP
+<refspec>
+.RS 4
+Point to move to, defaults to the tracking remote\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-fastforward\fR(1)
