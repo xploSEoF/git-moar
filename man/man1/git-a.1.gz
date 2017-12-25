@@ -1,0 +1,17 @@
+.\" Manpage for git a
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-A" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-a \- Adds files/hunks to staging
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit a\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Adds hunk check on existing files by aliasing to "git add -p", without blocking untracked files that have been listed\&.
+.SH "SEE ALSO"
+.sp
+\fBgit-add\fR(1)

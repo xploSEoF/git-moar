@@ -1,0 +1,43 @@
+#!/bin/bash
+
+declare -a parameters=()
+declare -a new_files=()
+declare -a modified_files=()
+
+git_status=$(git status -s | grep '^?? ' | sed -E 's#^\?\? ##')
+
+for param in "$@";do
+	case "$param" in
+		(--)
+			param_stop=true
+			;;
+		(-*)
+			if [[ -z "$param_stop" ]];then
+				parameters+=("$param")
+			else
+				testing=$(echo "$git_status"|grep "^$param\$")
+				if [[ "$?" == "0" ]];then
+					new_files+=("$param")
+				else
+					modified_files+=("$param")
+				fi
+			fi
+			;;
+		(*)
+			testing=$(echo "$git_status"|grep "^$param\$")
+			if [[ "$?" == "0" ]];then
+				new_files+=("$param")
+			else
+				modified_files+=("$param")
+			fi
+			;;
+	esac
+done
+
+if [[ ${#new_files[@]} == 0 || ${#modified_files[@]} > 0 ]];then
+	git add -p "${parameters[@]}" -- "${modified_files[@]}"
+fi
+
+if [[ ${#new_files[@]} > 0 ]];then
+	git add "${parameters[@]}" -- "${new_files[@]}"
+fi
