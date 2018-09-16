@@ -1,8 +1,96 @@
 #!/bin/bash
 
 declare -a parameters=()
+declare -a files=()
+declare -A listed_new=()
+declare -A listed_new_files=()
+declare -A listed_new_folders=()
 declare -a new_files=()
 declare -a modified_files=()
+declare -a folder_check=()
+IFS=$'\n'
+
+function _confirm() {
+	message="\e[94mStage this new ${2:-file} <$1>? [y/n/q"
+
+	help_message=$(cat <<EOF
+\e[91my - stage this new $1\e[0m
+\e[91mn - do not stage this new file\e[0m
+\e[91mq - quit; do not stage this file or any of the remaining ones\e[0m
+EOF
+)
+
+	if [[ -n "$2" ]];then
+		message="$message/s"
+		help_message=$(cat <<EOF
+$help_message
+\e[91ms - split the folder into parts\e[0m
+EOF
+)
+	fi
+
+	message="$message]\e[0m "
+
+	while true;do
+		echo -en "$message"
+		read -re
+
+		if [[ -n "$2" && $REPLY =~ ^[Ss] ]];then
+			return 3
+		elif [[ $REPLY =~ ^[Qq] ]];then
+			return 2
+		elif [[ $REPLY =~ ^[Nn] ]];then
+			return 1
+		elif [[ $REPLY =~ ^[Yy] ]];then
+			return
+		fi
+
+		echo -e "$help_message"
+	done
+}
+
+function within_new_folder() {
+	for within_new_folder_d in "${listed_new_folders[@]}";do
+		if [[ "$1" =~ ^$within_new_folder_d ]];then
+			echo "$1"
+			return
+		fi
+	done
+}
+
+function include_new_file() {
+	if [[ -d "$1" ]];then
+		_confirm "$1" "folder"
+		response="$?"
+		if [[ "$response" == "0" ]];then
+			git add "${parameters[@]}" -- "$1"
+		elif [[ "$response" == "2" ]];then
+			exit
+		elif [[ "$response" == "3" ]];then
+			for include_new_file_f in $(ls "$1");do
+				include_new_file "$1$include_new_file_f"
+			done
+		fi
+	else
+		_confirm "$1"
+		response="$?"
+		if [[ "$response" == "0" ]];then
+			git add "${parameters[@]}" -- "$1"
+		elif [[ "$response" == "2" ]];then
+			exit
+		fi
+	fi
+}
+
+# raw_new_files=$(git status -s | grep '^?? ' | sed -E 's#^\?\? ##')
+for file in $(git status -s | grep '^?? ' | sed -E 's#^\?\? ##');do
+	listed_new["$file"]="$file"
+	if [[ "$file" =~ /$ ]];then
+		listed_new_folders["$file"]="$file"
+	else
+		listed_new_files["$file"]="$file"
+	fi
+done
 
 git_status=$(git status -s | grep '^?? ' | sed -E 's#^\?\? ##')
 
@@ -15,29 +103,54 @@ for param in "$@";do
 			if [[ -z "$param_stop" ]];then
 				parameters+=("$param")
 			else
-				testing=$(echo "$git_status"|grep "^$param\$")
-				if [[ "$?" == "0" ]];then
-					new_files+=("$param")
-				else
-					modified_files+=("$param")
-				fi
+				files+=("$param")
 			fi
 			;;
 		(*)
-			testing=$(echo "$git_status"|grep "^$param\$")
-			if [[ "$?" == "0" ]];then
-				new_files+=("$param")
-			else
-				modified_files+=("$param")
-			fi
+			files+=("$param")
 			;;
 	esac
+done
+
+for f in "${files[@]}";do
+	if [[ -d $f ]];then
+		f="$f/"
+		if [[ $(within_new_folder "$f") ]];then
+			new_files+=("$f")
+			continue
+		else
+			for f2 in "${listed_new[@]}";do
+				if [[ "$f2" =~ ^$f ]];then
+					new_files+=("$f2")
+				fi
+			done
+		fi
+	else
+		if [[ "${listed_new_files["$f"]}" ]];then
+			new_files+=("$f")
+			continue
+		fi
+		if [[ $(within_new_folder "$f") ]];then
+			new_files+=("$f")
+			continue
+		fi
+	fi
+
+	modified_files+=("$f")
 done
 
 if [[ ${#new_files[@]} == 0 || ${#modified_files[@]} > 0 ]];then
 	git add -p "${parameters[@]}" -- "${modified_files[@]}"
 fi
 
-if [[ ${#new_files[@]} > 0 ]];then
-	git add "${parameters[@]}" -- "${new_files[@]}"
+if [[ ${#new_files[@]} > 0 || ${#modified_files[@]} > 0 ]];then
+	for f in "${new_files[@]}";do
+		include_new_file "$f"
+	done
+else
+	for f in "${listed_new[@]}";do
+		include_new_file "$f"
+	done
 fi
+
+unset IFS
