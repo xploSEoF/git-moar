@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source _confirm_source
+
 declare -a parameters=()
 declare -a files=()
 declare -A listed_new=()
@@ -10,43 +12,8 @@ declare -a modified_files=()
 declare -a folder_check=()
 IFS=$'\n'
 
-function _confirm() {
-	message="Stage this new ${2:-file}? [y/n/q"
-
-	help_message=$(cat <<EOF
-\e[91my - stage this new $1\e[0m
-\e[91mn - do not stage this new file\e[0m
-\e[91mq - quit; do not stage this file or any of the remaining ones\e[0m
-EOF
-)
-
-	if [[ -n "$2" ]];then
-		message="$message/s"
-		help_message=$(cat <<EOF
-$help_message
-\e[91ms - split the folder into parts\e[0m
-EOF
-)
-	fi
-
-	message="$message]"
-
-	while true;do
-		read -rep $'\e[94m'"$message"$'\e[0m '
-
-		if [[ -n "$2" && $REPLY =~ ^[Ss] ]];then
-			return 3
-		elif [[ $REPLY =~ ^[Qq] ]];then
-			return 2
-		elif [[ $REPLY =~ ^[Nn] ]];then
-			return 1
-		elif [[ $REPLY =~ ^[Yy] ]];then
-			return
-		fi
-
-		echo -e "$help_message"
-	done
-}
+declare -a file_options=("y:stage this new file" "n:do not stage this new file" "q:quit; do not stage this file or any of the remaining ones")
+declare -a folder_options=("y:stage this new folder" "n:do not stage this new folder" "q:quit; do not stage this folder or any of the remaining ones" "s:split this folder into its contents")
 
 function within_new_folder() {
 	for within_new_folder_d in "${listed_new_folders[@]}";do
@@ -58,34 +25,40 @@ function within_new_folder() {
 }
 
 function include_new_file() {
+	# local response
 	if [[ -d "$1" ]];then
 		echo -e "\e[97mdiff --git a/$1 b/$1\e[0m"
 		echo -e "\e[97mnew folder mode 100755\e[0m" #TODO
 		echo -e "\e[97m--- /dev/null\e[0m"
 		echo -e "\e[97m+++ b/$1\e[0m"
-		_confirm "$1" "folder"
-		response="$?"
-		echo
-		if [[ "$response" == "0" ]];then
-			git add "${parameters[@]}" -- "$1"
-		elif [[ "$response" == "2" ]];then
-			exit
-		elif [[ "$response" == "3" ]];then
-			for include_new_file_f in $(ls "$1");do
-				include_new_file "$1$include_new_file_f"
-			done
-		fi
+		_confirm response "Stage this new folder" "${folder_options[@]}"
+		case "$response" in
+			("y")
+				git add "${parameters[@]}" -- "$1"
+				;;
+			("q")
+				exit
+				;;
+			("s")
+				local f
+				for f in $(ls "$1");do
+					include_new_file "$1$f"
+				done
+				;;
+		esac
 	else
-		git diff --color -- /dev/null  "$1"
-		_confirm "$1"
-		response="$?"
-		echo
-		if [[ "$response" == "0" ]];then
-			git add "${parameters[@]}" -- "$1"
-		elif [[ "$response" == "2" ]];then
-			exit
-		fi
+		git --no-pager diff --color -- /dev/null  "$1"
+		_confirm response "Stage this new file" "${file_options[@]}"
+		case "$response" in
+			("y")
+				git add "${parameters[@]}" -- "$1"
+				;;
+			("q")
+				exit
+				;;
+		esac
 	fi
+	echo
 }
 
 for file in $(git status --porcelain | grep '^?? ' | sed -E 's#^\?\? ##');do
@@ -120,7 +93,7 @@ done
 
 for f in "${files[@]}";do
 	if [[ -d $f ]];then
-		f="$f/"
+		f="${f%%/}/"
 		if [[ $(within_new_folder "$f") ]];then
 			new_files+=("$f")
 			continue
