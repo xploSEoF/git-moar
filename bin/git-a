@@ -11,7 +11,7 @@ declare -a folder_check=()
 IFS=$'\n'
 
 function _confirm() {
-	message="\e[94mStage this new ${2:-file} <$1>? [y/n/q"
+	message="\e[94mStage this new ${2:-file}? [y/n/q"
 
 	help_message=$(cat <<EOF
 \e[91my - stage this new $1\e[0m
@@ -60,8 +60,13 @@ function within_new_folder() {
 
 function include_new_file() {
 	if [[ -d "$1" ]];then
+		echo -e "\e[97mdiff --git a/$1 b/$1\e[0m"
+		echo -e "\e[97mnew folder mode 100755\e[0m" #TODO
+		echo -e "\e[97m--- /dev/null\e[0m"
+		echo -e "\e[97m+++ b/$1\e[0m"
 		_confirm "$1" "folder"
 		response="$?"
+		echo
 		if [[ "$response" == "0" ]];then
 			git add "${parameters[@]}" -- "$1"
 		elif [[ "$response" == "2" ]];then
@@ -72,8 +77,10 @@ function include_new_file() {
 			done
 		fi
 	else
+		git diff --color -- /dev/null  "$1"
 		_confirm "$1"
 		response="$?"
+		echo
 		if [[ "$response" == "0" ]];then
 			git add "${parameters[@]}" -- "$1"
 		elif [[ "$response" == "2" ]];then
