@@ -11,7 +11,7 @@ declare -a folder_check=()
 IFS=$'\n'
 
 function _confirm() {
-	message="\e[94mStage this new ${2:-file}? [y/n/q"
+	message="Stage this new ${2:-file}? [y/n/q"
 
 	help_message=$(cat <<EOF
 \e[91my - stage this new $1\e[0m
@@ -29,11 +29,10 @@ EOF
 )
 	fi
 
-	message="$message]\e[0m "
+	message="$message]"
 
 	while true;do
-		echo -en "$message"
-		read -re
+		read -rep $'\e[94m'"$message"$'\e[0m '
 
 		if [[ -n "$2" && $REPLY =~ ^[Ss] ]];then
 			return 3
