@@ -1,39 +1,39 @@
 #!/bin/bash
 
-branch=$(git _determine-branch)
+branch="$(git _determine-branch)"
 
-if [[ "$?" -ne "0" ]];then
-	exit $?
+if [[ "$?" != "0" ]];then
+	exit "$?"
 fi
 
-remote=$(git branch-remote "$branch")
+remote="$(git branch-remote "$branch")"
 
-if [[ "$?" -ne "0" ]];then
+if [[ "$?" != "0" ]];then
 	echo "No tracking remote to update $branch from" >&2
-	exit $?
+	exit "$?"
 fi
 
-output=$(git fetch "$remote" 2>&1)
+output="$(git fetch "$remote" 2>&1)"
 
 if [[ -n "$output" ]]; then
 	echo "Latest commits fetched"
 fi
 
-old_stash_hash=$(git rev-parse -q --verify refs/stash)
+old_stash_hash="$(git rev-parse -q --verify refs/stash)"
 
 git stash 1>/dev/null 2>&1
 
-new_stash_hash=$(git rev-parse -q --verify refs/stash)
+new_stash_hash="$(git rev-parse -q --verify refs/stash)"
 
 if [[ "$old_stash_hash" != "$new_stash_hash" ]]; then
 	echo "Working tree stashed"
 fi
 
-git rb "$remote/$branch" || exit $?
+git rb "$remote/$branch" || exit "$?"
 echo "Rebased branch"
 
 if [[ "$old_stash_hash" != "$new_stash_hash" ]]; then
-	git stash pop || exit $?
+	git stash pop || exit "$?"
 	echo "Stash popped"
 fi
 
