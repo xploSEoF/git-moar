@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TARGET=$1
-DEST=$2
+TARGET="$1"
+DEST="$2"
 
 if [[ "$DEST" == "" ]];then
 	DEST="HEAD"
@@ -12,9 +12,9 @@ fi
 
 git branch --all --color=never --contains "$TARGET" | grep "$PATTERN" 2>&1 >/dev/null
 
-if [[ "$?" -eq "1" ]];then
+if [[ "$?" != "1" ]];then
 	echo "$TARGET cannot be fast-forwarded to $DEST" >&2
 	exit 1
 fi
 
-git branch -f --no-track $TARGET $DEST
+git branch -f --no-track "$TARGET" "$DEST"

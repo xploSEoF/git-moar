@@ -4,7 +4,7 @@ branch=$1
 
 git _validate-branch $branch >/dev/null 2>&1
 
-if [[ -n $branch ]] && [[ "$?" -ne "0" ]];then
+if [[ -n $branch ]] && [[ "$?" != "0" ]];then
 	echo "Invalid branch" >&2
 	branch=""
 fi
@@ -12,7 +12,7 @@ fi
 if [[ -z $branch ]];then
 	branch=$(git current-branch 2>/dev/null)
 
-	if [[ "$?" -ne "0" ]];then
+	if [[ "$?" != "0" ]];then
                 branches=$(git list-branches)
 
 		if [[ $(echo "$branches" | wc -l) == 1 ]];then
