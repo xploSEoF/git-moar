@@ -15,9 +15,18 @@ fi
 
 output="$(git fetch "$remote" 2>&1)"
 
-if [[ -n "$output" ]]; then
+if [[ "$?" != "0" ]]; then
+	echo "Trouble fetching commits" >&2
+elif [[ -n "$output" ]]; then
 	echo "Latest commits fetched"
+else
+	echo "No commits to fetch"
 fi
+
+echo ""
+echo "Current status (ignoring untracked files):"
+git st -bsuno
+echo ""
 
 old_stash_hash="$(git rev-parse -q --verify refs/stash)"
 
@@ -35,6 +44,11 @@ echo "Rebased branch"
 if [[ "$old_stash_hash" != "$new_stash_hash" ]]; then
 	git stash pop || exit "$?"
 	echo "Stash popped"
+else
+	echo ""
+	echo "New status (ignoring untracked files):"
+	git st -bsuno
+	echo ""
 fi
 
 git subup
