@@ -1,0 +1,20 @@
+.\" Manpage for git ignore
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-IGNORE" "1" "2021-06-29" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-ignore \- Change the status of a file to "assumed no change" or back again
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit ignore [-r]\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+This command lists all the files that are ignore\&.
+.SH "OPTIONS"
+.PP
+-r
+.RS 4
+Reverse, invert, assume there IS a change\&.
+.RE
