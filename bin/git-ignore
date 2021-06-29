@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ "$1" == "-r" ]];then
+	shift
+	git update-index --no-assume-unchanged "$@"
+else
+	git update-index --assume-unchanged "$@"
+fi
