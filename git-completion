@@ -80,6 +80,10 @@ _git_hoist() {
 	fi
 }
 
+_git_ignore() {
+	return
+}
+
 _git_ignored() {
 	return
 }
