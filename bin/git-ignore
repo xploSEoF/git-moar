@@ -1,0 +1,16 @@
+#!/bin/bash
+
+case "$1" in
+	("-r")
+		shift
+		git update-index --no-assume-unchanged "$@"
+		;;
+	("-l")
+		shift
+		git ls-files -v | grep ^h
+		;;
+	(*)
+		echo "Ignoring: $@"
+		git update-index --assume-unchanged "$@"
+		;;
+esac
