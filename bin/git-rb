@@ -3,5 +3,5 @@
 if [[ -d ".git/rebase-merge" ]] || [[ -d ".git/rebase-apply" ]];then
 	git rebase "$@" | sed -E 's#git rebase --#git rb --#g'
 else
-	git rebase -p "$@" | sed -E 's#git rebase --#git rb --#g'
+	git rebase -r "$@" | sed -E 's#git rebase --#git rb --#g'
 fi
