@@ -3,14 +3,33 @@
 case "$1" in
 	("-r")
 		shift
-		git update-index --no-assume-unchanged "$@"
+
+		for file in "$@"; do
+			git ls-files --error-unmatch "$file" >/dev/null 2>/dev/null
+
+			if [[ "$?" == "0" ]]; then
+				git update-index --no-assume-unchanged "$@"
+			else
+				# TODO - make this work with untracked files, too
+				grep -v "^$file$" "$(git rev-parse --show-toplevel)/.git/info/exclude" >"$(git rev-parse --show-toplevel)/.git/info/exclude.new" && mv "$(git rev-parse --show-toplevel)/.git/info/exclude.new" "$(git rev-parse --show-toplevel)/.git/info/exclude"
+			fi
+		done
 		;;
 	("-l")
 		shift
-		git ls-files -v | grep ^h
+		{ git ls-files -v | grep ^h; sed -e 's/^/? /' "$(git rev-parse --show-toplevel)/.git/info/exclude"; } | sort -k2
 		;;
 	(*)
 		echo "Ignoring: $@"
-		git update-index --assume-unchanged "$@"
+
+		for file in "$@"; do
+			git ls-files --error-unmatch "$file" >/dev/null 2>/dev/null
+
+			if [[ "$?" == "0" ]]; then
+				git update-index --assume-unchanged "$@" | cat "$@"
+			else
+				grep "^$file$" "$(git rev-parse --show-toplevel)/.git/info/exclude" >/dev/null || echo "$file" >>"$(git rev-parse --show-toplevel)/.git/info/exclude"
+			fi
+		done
 		;;
 esac
