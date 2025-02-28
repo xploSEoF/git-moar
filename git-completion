@@ -138,7 +138,7 @@ _git_subup() {
 		--remote --no-fetch
 		--recommend-shallow --no-recommend-shallow
 		--force --rebase --merge --reference --depth --jobs
-	"	
+	"
 }
 
 _git_tidy_branches() {
@@ -156,4 +156,3 @@ _git_unstage() {
 _git_yoink() {
 	_git_cherry_pick
 }
-

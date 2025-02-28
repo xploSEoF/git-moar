@@ -1,43 +1,25 @@
 #!/bin/bash
 
-declare -a parameters=()
-declare -a new_files=()
-declare -a modified_files=()
+declare -A listed_new=()
 
-git_status=$(git status -s | grep '^?? ' | sed -E 's#^\?\? ##')
+cd "$(git rev-parse --show-toplevel)"
 
-for param in "$@";do
-	case "$param" in
-		(--)
-			param_stop=true
-			;;
-		(-*)
-			if [[ -z "$param_stop" ]];then
-				parameters+=("$param")
-			else
-				testing=$(echo "$git_status"|grep "^$param\$")
-				if [[ "$?" == "0" ]];then
-					new_files+=("$param")
-				else
-					modified_files+=("$param")
-				fi
-			fi
-			;;
-		(*)
-			testing=$(echo "$git_status"|grep "^$param\$")
-			if [[ "$?" == "0" ]];then
-				new_files+=("$param")
-			else
-				modified_files+=("$param")
-			fi
-			;;
-	esac
+for file in $(git status --porcelain | grep '^ A ' | sed -E 's#^.. ##');do
+	listed_new["$file"]="$file"
 done
 
-if [[ ${#new_files[@]} == 0 || ${#modified_files[@]} > 0 ]];then
-	git add -p "${parameters[@]}" -- "${modified_files[@]}"
-fi
+git add -N -- .
+git add -p "$@"
 
-if [[ ${#new_files[@]} > 0 ]];then
-	git add "${parameters[@]}" -- "${new_files[@]}"
-fi
+for file in $(git status --porcelain | grep '^ A ' | sed -E 's#^.. ##');do
+	is_new_file=0
+	for new_file in "${listed_new[@]}"; do
+		if [[ "$file" == "$new_file" ]];then
+			is_new_file=1
+		fi
+	done
+
+	if [[ "$is_new_file" == "0" ]]; then
+		git unstage -q "$file"
+	fi
+done
