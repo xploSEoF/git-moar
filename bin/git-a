@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source _confirm_source
-
 declare -A listed_new=()
 
 cd "$(git rev-parse --show-toplevel)"
