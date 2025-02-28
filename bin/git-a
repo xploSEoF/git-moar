@@ -2,134 +2,26 @@
 
 source _confirm_source
 
-declare -a parameters=()
-declare -a files=()
 declare -A listed_new=()
-declare -A listed_new_files=()
-declare -A listed_new_folders=()
-declare -a new_files=()
-declare -a modified_files=()
-declare -a folder_check=()
-IFS=$'\n'
 
-declare -a file_options=("y:stage this new file" "n:do not stage this new file" "q:quit; do not stage this file or any of the remaining ones")
-declare -a folder_options=("y:stage this new folder" "n:do not stage this new folder" "q:quit; do not stage this folder or any of the remaining ones" "s:split this folder into its contents")
+cd "$(git rev-parse --show-toplevel)"
 
-function within_new_folder() {
-	for within_new_folder_d in "${listed_new_folders[@]}";do
-		if [[ "$1" =~ ^$within_new_folder_d ]];then
-			echo "$1"
-			return
-		fi
-	done
-}
-
-function include_new_file() {
-	# local response
-	if [[ -d "$1" ]];then
-		echo -e "\e[97mdiff --git a/$1 b/$1\e[0m"
-		echo -e "\e[97mnew folder mode 100755\e[0m" #TODO
-		echo -e "\e[97m--- /dev/null\e[0m"
-		echo -e "\e[97m+++ b/$1\e[0m"
-		_confirm response "Stage this new folder" "${folder_options[@]}"
-		case "$response" in
-			("y")
-				git add "${parameters[@]}" -- "$1"
-				;;
-			("q")
-				exit
-				;;
-			("s")
-				local f
-				for f in $(ls "$1");do
-					include_new_file "$1$f"
-				done
-				;;
-		esac
-	else
-		git --no-pager diff --color -- /dev/null  "$1"
-		_confirm response "Stage this new file" "${file_options[@]}"
-		case "$response" in
-			("y")
-				git add "${parameters[@]}" -- "$1"
-				;;
-			("q")
-				exit
-				;;
-		esac
-	fi
-	echo
-}
-
-for file in $(git status --porcelain | grep '^?? ' | sed -E 's#^\?\? ##');do
+for file in $(git status --porcelain | grep '^ A ' | sed -E 's#^.. ##');do
 	listed_new["$file"]="$file"
-	if [[ "$file" =~ /$ ]];then
-		listed_new_folders["$file"]="$file"
-	else
-		listed_new_files["$file"]="$file"
+done
+
+git add -N -- .
+git add -p "$@"
+
+for file in $(git status --porcelain | grep '^ A ' | sed -E 's#^.. ##');do
+	is_new_file=0
+	for new_file in "${listed_new[@]}"; do
+		if [[ "$file" == "$new_file" ]];then
+			is_new_file=1
+		fi
+	done
+
+	if [[ "$is_new_file" == "0" ]]; then
+		git unstage -q "$file"
 	fi
 done
-
-git status --porcelain | grep '^[^?!]' >/dev/null 2>&1
-git_status="$?"
-
-for param in "$@";do
-	case "$param" in
-		(--)
-			param_stop=true
-			;;
-		(-*)
-			if [[ -z "$param_stop" ]];then
-				parameters+=("$param")
-			else
-				files+=("$param")
-			fi
-			;;
-		(*)
-			files+=("$param")
-			;;
-	esac
-done
-
-for f in "${files[@]}";do
-	if [[ -d $f ]];then
-		f="${f%%/}/"
-		if [[ $(within_new_folder "$f") ]];then
-			new_files+=("$f")
-			continue
-		else
-			for f2 in "${listed_new[@]}";do
-				if [[ "$f2" =~ ^$f ]];then
-					new_files+=("$f2")
-				fi
-			done
-		fi
-	else
-		if [[ "${listed_new_files["$f"]}" ]];then
-			new_files+=("$f")
-			continue
-		fi
-		if [[ $(within_new_folder "$f") ]];then
-			new_files+=("$f")
-			continue
-		fi
-	fi
-
-	modified_files+=("$f")
-done
-
-if [[ "$git_status" == "0" && (${#new_files[@]} == 0 || ${#modified_files[@]} > 0) ]];then
-	git add -p "${parameters[@]}" -- "${modified_files[@]}"
-fi
-
-if [[ ${#new_files[@]} > 0 || ${#modified_files[@]} > 0 ]];then
-	for f in "${new_files[@]}";do
-		include_new_file "$f"
-	done
-else
-	for f in "${listed_new[@]}";do
-		include_new_file "$f"
-	done
-fi
-
-unset IFS
