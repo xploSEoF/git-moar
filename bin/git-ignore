@@ -8,7 +8,7 @@ case "$1" in
 			git ls-files --error-unmatch "$file" >/dev/null 2>/dev/null
 
 			if [[ "$?" == "0" ]]; then
-				git update-index --no-assume-unchanged "$@"
+				git update-index --no-assume-unchanged "$file"
 			else
 				# TODO - make this work with untracked files, too
 				grep -v "^$file$" "$(git rev-parse --show-toplevel)/.git/info/exclude" >"$(git rev-parse --show-toplevel)/.git/info/exclude.new" && mv "$(git rev-parse --show-toplevel)/.git/info/exclude.new" "$(git rev-parse --show-toplevel)/.git/info/exclude"
@@ -26,7 +26,7 @@ case "$1" in
 			git ls-files --error-unmatch "$file" >/dev/null 2>/dev/null
 
 			if [[ "$?" == "0" ]]; then
-				git update-index --assume-unchanged "$@" | cat "$@"
+				git update-index --assume-unchanged "$file"
 			else
 				grep "^$file$" "$(git rev-parse --show-toplevel)/.git/info/exclude" >/dev/null || echo "$file" >>"$(git rev-parse --show-toplevel)/.git/info/exclude"
 			fi
