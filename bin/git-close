@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# make sure we're clean first
+# get whether we're to delete the branch after
+# get whether we're to push the branch(es)
+# get the name of the branch we're on (work-branch)
+# get the name of the branch we're closing into (main-trunk)
+
+# check the work-branch is based off the main-trunk (--ff-only)
+# checkout the main-trunk
+# git merge --ff-only work-branch -m "$work-branch merged into $main-trunk"
+# if deleting, delete the original branch
+# if we're pushing, push the branch(es if also deleting)
