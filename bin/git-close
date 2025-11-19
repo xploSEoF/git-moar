@@ -1,13 +1,47 @@
 #!/bin/bash
 
-# make sure we're clean first
-# get whether we're to delete the branch after
-# get whether we're to push the branch(es)
-# get the name of the branch we're on (work-branch)
-# get the name of the branch we're closing into (main-trunk)
+function isBasedOnUpstream() {
+	upstream="$(git rev-parse --abbrev-ref "$1"@{upstream} 2>/dev/null)"
+	[ -z "$upstream" ] || git merge-base --is-ancestor "$upstream" "$1"
 
-# check the work-branch is based off the main-trunk (--ff-only)
-# checkout the main-trunk
-# git merge --ff-only work-branch -m "$work-branch merged into $main-trunk"
+	if [ "$?" -ne "0" ];then
+		echo "Branch $1 is behind its upstream branch $upstream"
+
+		exit 2
+	fi
+}
+
+# make sure we're clean first
+[ -z "$(git status --porcelain)" ];
+# if [ "$?" -ne "0" ];then
+	# echo "Uncomitted changes detected. Please stash for later or revert all changes.";
+	# exit 1
+# fi
+
+# git fetch
+
+# get whether we're to delete the branch after
+
+# get whether we're to push the branch(es)
+
+
+workBranch="$(git rev-parse --abbrev-ref HEAD)"
+mainTrunk="$1"
+
+isBasedOnUpstream "$mainTrunk"
+isBasedOnUpstream "$workBranch"
+
+git merge-base --is-ancestor "$mainTrunk" "$workBranch"
+
+if [ "$?" -ne "0" ];then
+	echo "Branch $workBranch is not based on $mainTrunk"
+
+	exit 3
+fi
+
+# git checkout main-trunk
+# git merge --ff-only workBranch -m "$workBranch merged into $mainTrunk"
+
 # if deleting, delete the original branch
+
 # if we're pushing, push the branch(es if also deleting)
