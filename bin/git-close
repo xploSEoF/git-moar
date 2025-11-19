@@ -1,47 +1,61 @@
 #!/bin/bash
 
 function isBasedOnUpstream() {
-	upstream="$(git rev-parse --abbrev-ref "$1"@{upstream} 2>/dev/null)"
-	[ -z "$upstream" ] || git merge-base --is-ancestor "$upstream" "$1"
+	isBasedOn "$1" "$(git rev-parse --abbrev-ref "$1"@{upstream} 2>/dev/null)" " its upstream branch"
+}
 
-	if [ "$?" -ne "0" ];then
-		echo "Branch $1 is behind its upstream branch $upstream"
-
-		exit 2
+function isBasedOn() {
+	if ! [ -z "$2" ] && ! git merge-base --is-ancestor "$2" "$1";then
+		echo "Branch $1 is behind$3" "$2"
+		exit 3
 	fi
 }
 
-# make sure we're clean first
-[ -z "$(git status --porcelain)" ];
-# if [ "$?" -ne "0" ];then
-	# echo "Uncomitted changes detected. Please stash for later or revert all changes.";
-	# exit 1
-# fi
+delete=
+push=
+mainTrunk=
+workBranch=
 
-# git fetch
+for i in "$@";do
+	case "$i" in
+		-d|--delete)
+			delete=1
+			;;
+		# -p|--push)
+		# 	push=1
+		# 	;;
+		-*|--*)
+			echo "Unknown option $i"
+			exit 2
+			;;
+		--)
+			break;
+			;;
+		*)
+			if [ -z "$mainTrunk" ];then
+				mainTrunk="$i"
+			elif [ -z "$workBranch" ];then
+				workBranch="$i"
+			fi
+			;;
+	esac
+done;
 
-# get whether we're to delete the branch after
+! [ -z "$(git status --porcelain)" ] && echo "Uncomitted changes detected. Please stash for later or revert all changes." && exit 1
 
-# get whether we're to push the branch(es)
+git fetch
 
-
-workBranch="$(git rev-parse --abbrev-ref HEAD)"
-mainTrunk="$1"
+if [ -z "$workBranch" ];then
+	workBranch="$(git rev-parse --abbrev-ref HEAD)"
+fi
 
 isBasedOnUpstream "$mainTrunk"
 isBasedOnUpstream "$workBranch"
+isBasedOn "$workBranch" "$mainTrunk"
 
-git merge-base --is-ancestor "$mainTrunk" "$workBranch"
+git checkout "$mainTrunk"
+git merge --ff-only $workBranch -m "$workBranch merged into $mainTrunk"
 
-if [ "$?" -ne "0" ];then
-	echo "Branch $workBranch is not based on $mainTrunk"
-
-	exit 3
-fi
-
-# git checkout main-trunk
-# git merge --ff-only workBranch -m "$workBranch merged into $mainTrunk"
-
-# if deleting, delete the original branch
-
+[ -z "$delete" ] || git branch -D "$workBranch"
+# [ -z "$push" ] || git push
 # if we're pushing, push the branch(es if also deleting)
