@@ -54,7 +54,7 @@ isBasedOnUpstream "$workBranch"
 isBasedOn "$workBranch" "$mainTrunk"
 
 git checkout "$mainTrunk"
-git merge --ff-only $workBranch -m "$workBranch merged into $mainTrunk"
+git merge --no-ff $workBranch -m "$workBranch merged into $mainTrunk"
 
 [ -z "$delete" ] || git branch -D "$workBranch"
 # [ -z "$push" ] || git push
