@@ -41,7 +41,7 @@ for i in "$@";do
 	esac
 done;
 
-! [ -z "$(git status --porcelain)" ] && echo "Uncomitted changes detected. Please stash for later or revert all changes." && exit 1
+! [ -z "$(git status --porcelain | grep -vE "\?\?")" ] && echo "Uncomitted changes detected. Please stash for later or revert all changes." && exit 1
 
 git fetch
 
