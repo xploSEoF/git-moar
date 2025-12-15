@@ -16,7 +16,7 @@ case "$1" in
 		;;
 	("-l")
 		shift
-		{ git ls-files -v | grep ^h; sed -e 's/^/? /' "$(git rev-parse --show-toplevel)/.git/info/exclude"; } | sort -k2
+		{ git ls-files -v | grep ^h; grep -Ev "^#" "$(git rev-parse --show-toplevel)/.git/info/exclude" | sed -e 's/^/? /'; } | sort -k2
 		;;
 	(*)
 		echo "Ignoring: $@"

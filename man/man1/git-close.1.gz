@@ -1,0 +1,39 @@
+.\" Manpage for git close
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-CLOSE" "1" "2017-11-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-close \- Improved concept for merging
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit close [-d] [-p] <into-branch> [<working-branch>]\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Rather than expecting you to be on the into-branch (typically the main/master branch) and merge some other work in (the working-branch), git close expects you to by default be on the working-branch and say what the into-branch is using "git merge"\&.
+Additionally, close expects the branch to have been rebased atop the into-branch
+.SH "OPTIONS"
+.PP
+-d, --delete
+.RS 4
+Delete the working-branch once merged\&.
+.RE
+.PP
+-p, --push
+.RS 4
+Push the into-branch once merged (and the deletion of the working-branch, if -d also applied)\&.
+.RE
+.PP
+<into-branch>
+.RS 4
+The "trunk" to merge the working branch into. This might be "main", "master", or "dev"\&.
+.RE
+.PP
+<working-branch>
+.RS 4
+The branch with the work to be merged in, typically a feature, bugfix, or hotfix branch\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-checkout\fR(1)

@@ -1,0 +1,61 @@
+#!/bin/bash
+
+function isBasedOnUpstream() {
+	isBasedOn "$1" "$(git rev-parse --abbrev-ref "$1"@{upstream} 2>/dev/null)" " its upstream branch"
+}
+
+function isBasedOn() {
+	if ! [ -z "$2" ] && ! git merge-base --is-ancestor "$2" "$1";then
+		echo "Branch $1 is behind$3" "$2"
+		exit 3
+	fi
+}
+
+delete=
+push=
+mainTrunk=
+workBranch=
+
+for i in "$@";do
+	case "$i" in
+		-d|--delete)
+			delete=1
+			;;
+		# -p|--push)
+		# 	push=1
+		# 	;;
+		-*|--*)
+			echo "Unknown option $i"
+			exit 2
+			;;
+		--)
+			break;
+			;;
+		*)
+			if [ -z "$mainTrunk" ];then
+				mainTrunk="$i"
+			elif [ -z "$workBranch" ];then
+				workBranch="$i"
+			fi
+			;;
+	esac
+done;
+
+! [ -z "$(git status --porcelain | grep -vE "\?\?")" ] && echo "Uncomitted changes detected. Please stash for later or revert all changes." && exit 1
+
+git fetch
+
+if [ -z "$workBranch" ];then
+	workBranch="$(git rev-parse --abbrev-ref HEAD)"
+fi
+
+isBasedOnUpstream "$mainTrunk"
+isBasedOnUpstream "$workBranch"
+isBasedOn "$workBranch" "$mainTrunk"
+
+git checkout "$mainTrunk"
+git merge --no-ff $workBranch -m "$workBranch merged into $mainTrunk"
+
+[ -z "$delete" ] || git branch -D "$workBranch"
+# [ -z "$push" ] || git push
+# if we're pushing, push the branch(es if also deleting)
