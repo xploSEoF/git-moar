@@ -1,0 +1,163 @@
+#!/bin/bash
+
+rootBranch="$(git rev-parse --abbrev-ref $(git remote)/HEAD | awk -F '/' '{print $2}' || git config init.defaultBranch || ([[ "$(git version | awk -F ' ' '{print $3}')" > "3.0.0" ]] && echo 'main' || echo 'master'))"
+currentBranch=
+version=
+push=
+yes=
+
+for i in "$@";do
+	case "$i" in
+		-y)
+			yes=1
+			;;
+		-p|--push)
+			push=1
+			;;
+		-*|--*)
+			echo "Unknown option $i"
+			exit 2
+			;;
+		--)
+			break;
+			;;
+		v*)
+			if [ -z "$version" ];then
+				version="${i:1}"
+			fi
+			;;
+		major|minor|patch)
+			if [ -z "$version" ];then
+				version="$i"
+			fi
+			;;
+		--major|--minor|--patch)
+			if [ -z "$version" ];then
+				version="${i:2}"
+			fi
+			;;
+		*)
+			;;
+	esac
+done;
+
+# Check is clean
+! [ -z "$(git status --porcelain | grep -vE "\?\?")" ] && echo "Uncomitted changes detected. Please stash for later or revert all changes." && exit 1
+
+git fetch
+
+# Check is on root branch
+# I'm considering what to do regards this - seek confirmation, make sure it's a beta/alpha/otherwise-marked branch, or go through the complicated rigour of figuring out where the releases are in relation to HEAD and sanity checking everything
+if [ "$currentBranch" != "$rootBranch" ];then
+	echo "Releases can only occur on the $rootBranch branch"
+
+	exit 3
+fi
+
+# Latest and next could come in useful for some things, though I'm not sure why yet
+latestVersion=
+# nextVersion=
+currentVersion=
+
+previousTag=
+
+for tag in $(git tag -l | grep -P "^v([0-9]+(\.|(?=$))){3}$" | sort -rV);do
+	if [ -z "$latestVersion" ];then
+		latestVersion="${tag:1}"
+	fi
+	if [ -z "$currentVersion" ] && git merge-base --is-ancestor "$tag" HEAD;then
+		# nextVersion="${previousTag:1}"
+		currentVersion="${tag:1}"
+	fi
+	# if git merge-base --is-ancestor HEAD "$tag";then
+	# 	previousTag="$tag"
+	# fi
+done;
+
+if [ -z "$version" ];then
+	version="patch"
+fi
+
+if [ -f "$(git rev-parse --show-toplevel)/package.json" ];then
+	moduleVersion=
+
+	if [ -f "$(git rev-parse --show-toplevel)/package-lock.json" ];then
+		moduleLockVersions="$(jq -r '.version,.packages."".version' "$(git rev-parse --show-toplevel)/package-lock.json")"
+	fi
+fi
+
+if [ -z "$currentVersion" ];then
+	if [ -z "$moduleVersion" ];then
+		currentVersion="0.0.0"
+	else
+		currentVersion="$moduleVersion"
+	fi
+fi
+
+case "$version" in
+	major|minor|patch)
+		major="${currentVersion%%.*}"
+		majorRemaining="${currentVersion#*.}"
+		minor="${majorRemaining%%.*}"
+		minorRemaining="${majorRemaining#*.}"
+		patch="${minorRemaining%%.*}"
+
+		case "$version" in
+			major)
+				version="$(((++major))).0.0"
+				;;
+			minor)
+				version="$major.$(((++minor))).0"
+				;;
+			patch)
+				version="$major.$minor.$(((++patch)))"
+				;;
+		esac
+		;;
+esac
+
+if [ "${version:0:1}" != "v" ];then
+	version="v$version"
+fi
+
+if [ -z "$yes" ];then
+	read -p "Make version $version (y/n) " -n 1 -r
+	echo
+
+	if [[ -z $REPLY || $REPLY =~ ^[^Yy] ]];then
+		echo "Aborting"
+		exit 4
+	fi
+fi
+
+if [ -f "$(git rev-parse --show-toplevel)/package.json" ];then
+	if [ "$moduleVersion" == "$currentVersion" ];then
+		moduleVersion="$currentVersion"
+		cat package.json | jq --tab '. + {version: "'${version:1}'"}' >package-tmp.json && mv package-tmp.json package.json
+	fi
+
+	if ! [ -z "$moduleLockVersions" ];then
+		needUpdate=
+		for moduleVersion in $moduleLockVersions;do
+			needUpdate+=$([ "$moduleVersion" != "$moduleLockVersion" ] && echo "1")
+		done
+
+		if ! [ -z "$needUpdate" ];then
+			npm i 2>&1 >/dev/null
+		fi
+	fi
+
+	! [ -z "$(git status --porcelain | grep -vE "\?\?")" ] && git add package.json package-lock.json && git ci -m "Version ${version:1}"
+
+	name="$(jq -r '.name' "$(git rev-parse --show-toplevel)/package.json")";
+
+	if ! [ -z "$push" ] && [ "${name:0:1}" == "@" ];then
+		npm publish
+	fi
+fi
+
+git tag -m "Released by $(git config user.name)" "$version"
+
+if ! [ -z "$push" ];then
+	git push "$(git remote)" "$currentBranch" "$version"
+fi
