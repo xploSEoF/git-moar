@@ -1,0 +1,34 @@
+.\" Manpage for git release
+.\" https://github.com/xploSEoF/git-moar
+.TH "GIT\-RELEASE" "1" "2025-12-18" "1.0" "GitMOAR Manual"
+.SH "NAME"
+git-release \- A method for easing the creation of semver tags
+.SH "SYNOPSIS"
+.sp
+.nf
+\fIgit release [-y] [-p|--push] [<version>]\fR
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Make a git (and npm) release
+.SH "OPTIONS"
+.PP
+-y
+.RS 4
+Assume yes to any and all questions\&.
+Currently, there is only one question confirming the new version before making any changes\&.
+.RE
+.PP
+-p, --push
+.RS 4
+Push the tag and any changes to github, and if it's a fully named npm repository, npm publish, too\&.
+.RE
+.PP
+<version>
+.RS 4
+A versions string, optionally begining with a "v", or any of the keywords "major", "minor", or "patch" where it increments a semver release accordingly\&.
+.RE
+.SH "SEE ALSO"
+.sp
+\fBgit-tag\fR(1)
