@@ -125,6 +125,59 @@ _git_rb() {
 	_git_rebase
 }
 
+_git_release() {
+	push=
+	yes=
+	suggest=
+
+	for i in "$COMP_LINE";do
+		case "$i" in
+			-y)
+				yes=1
+				;;
+			-p|--push)
+				push=1
+				;;
+		esac
+	done
+
+	if [ -z "$push" ];then
+		suggest+=" -p --push "
+	fi
+
+	if [ -z "$yes" ];then
+		suggest+=" -y "
+	fi
+
+	num="$(((COMP_CWORD - 2 - $yes - $push)))"
+
+	if [ "$num" == "0" ];then
+		currentVersion=
+
+		for tag in $(git tag -l | grep -P "^v([0-9]+(\.|(?=$))){3}$" | sort -rV);do
+			if [ -z "$currentVersion" ] && git merge-base --is-ancestor "$tag" HEAD;then
+				currentVersion="${tag:1}"
+			fi
+		done;
+
+		if [ -z "$currentVersion" ];then
+			currentVersion="0.0.0"
+		fi
+
+		major="${currentVersion%%.*}"
+		majorRemaining="${currentVersion#*.}"
+		minor="${majorRemaining%%.*}"
+		minorRemaining="${majorRemaining#*.}"
+		majorVersion="$(( $major + 1 )).0.0"
+		minorVersion="$major.$(( $minor + 1 )).0"
+		patchVersion="$major.$minor.$(( ${minorRemaining%%.*} + 1))"
+
+		suggest+=" major minor patch v$majorVersion v$minorVersion v$patchVersion "
+	fi
+
+	__gitcomp "${suggest[*]}"
+}
+
 _git_reset_permissions() {
 	return
 }
