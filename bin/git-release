@@ -82,10 +82,10 @@ if [ -z "$version" ];then
 fi
 
 if [ -f "$(git rev-parse --show-toplevel)/package.json" ];then
-	moduleVersion=
+	moduleVersion="$(jq -r '.version' "$(git rev-parse --show-toplevel)/package.json")"
 
 	if [ -f "$(git rev-parse --show-toplevel)/package-lock.json" ];then
-		moduleLockVersions="$(jq -r '.version,.packages."".version' "$(git rev-parse --show-toplevel)/package-lock.json")"
+		moduleLockVersions="$(jq -r '.version,.packages."".version' "$(git rev-parse --show-toplevel)/package-lock.json"|uniq)"
 	fi
 fi
 
