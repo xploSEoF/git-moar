@@ -132,10 +132,10 @@ _git_release() {
 
 	for i in "$COMP_LINE";do
 		case "$i" in
-			-y)
+			(-y)
 				yes=1
 				;;
-			-p|--push)
+			(-p|--push)
 				push=1
 				;;
 		esac
@@ -149,7 +149,7 @@ _git_release() {
 		suggest+=" -y "
 	fi
 
-	num="$(((COMP_CWORD - 2 - $yes - $push)))"
+	num="$(((COMP_CWORD - 2 $yes $push)))"
 
 	if [ "$num" == "0" ];then
 		currentVersion=
